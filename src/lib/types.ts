@@ -5,4 +5,10 @@ export type Product = {
   price: number;
   discountedPrice?: number;
   images: string[];
+  colors?: Array<{
+    name: string;
+    image: string;
+  }>;
+  longDescription?: string;
+  whatsInBox?: string[];
 };

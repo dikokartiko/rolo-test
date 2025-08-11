@@ -2,6 +2,7 @@
 
 import { ChakraProvider, createSystem, defaultConfig } from "@chakra-ui/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { Toaster } from "./toaster";
 
 const customConfig = {
   ...defaultConfig,
@@ -23,7 +24,10 @@ const system = createSystem(customConfig);
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <NextThemesProvider attribute="class" defaultTheme="light" enableSystem>
-      <ChakraProvider value={system}>{children}</ChakraProvider>
+      <ChakraProvider value={system}>
+        {children}
+        <Toaster />
+      </ChakraProvider>
     </NextThemesProvider>
   );
 }
