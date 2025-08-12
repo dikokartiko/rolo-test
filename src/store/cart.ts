@@ -15,8 +15,8 @@ type CartState = {
   removeItem: (productId: string, selectedColorName?: string) => void;
   updateQuantity: (productId: string, quantity: number, selectedColorName?: string) => void;
 };
-
-export const useCartStore = create<CartState>((set) => ({
+ 
+export const useCartStore = create<CartState>((set, get) => ({
   items: [],
   addItem: (product, selectedColor) =>
     set((state) => {

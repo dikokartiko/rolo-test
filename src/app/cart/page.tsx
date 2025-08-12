@@ -139,11 +139,24 @@ const CartPage = () => {
         </Flex>
       </Flex>
       <BottomActionBar onBack={() => window.history.back()}>
-        <Text fontSize="lg" fontWeight="bold">
+        <Box fontSize={{ base: '20px', md: '24px' }} fontWeight="400" color="#375737">
           Total: ${totalPrice.toFixed(2)}
-        </Text>
+        </Box>
         <Link href="/details" passHref>
-          <Button as="a" disabled={cartItems.length === 0} opacity={cartItems.length > 0 ? 1 : 0.5}>
+          <Button
+            as="a"
+            bg="#748067"
+            color="white"
+            fontSize="14px"
+            fontWeight="400"
+            h={{ base: '44px', md: '46px' }}
+            px="20px"
+            borderRadius="4px"
+            _hover={{ bg: '#5F6B56' }}
+            _active={{ bg: '#4A5444' }}
+            disabled={cartItems.length === 0}
+            opacity={cartItems.length > 0 ? 1 : 0.5}
+          >
             Make Payment
           </Button>
         </Link>

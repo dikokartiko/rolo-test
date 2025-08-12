@@ -2,14 +2,16 @@
 
 import {
   Box,
-  Button,
   Input,
   Stack,
+  Flex,
+  Separator
 } from '@chakra-ui/react';
 import { Field } from '@/components/ui/field';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useEffect } from 'react';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -21,7 +23,15 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-export const CustomerDetailsForm = () => {
+interface CustomerDetailsFormProps {
+  onValidChange: (isValid: boolean) => void;
+  onSubmit: (data: FormValues) => void;
+}
+
+export const CustomerDetailsForm = ({
+  onValidChange,
+  onSubmit: parentOnSubmit,
+}: CustomerDetailsFormProps) => {
   const {
     register,
     handleSubmit,
@@ -31,7 +41,11 @@ export const CustomerDetailsForm = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = async (data: FormValues) => {
+  useEffect(() => {
+    onValidChange(isValid);
+  }, [isValid, onValidChange]);
+
+  const handleFormSubmit = async (data: FormValues) => {
     const response = await fetch('/api/details', {
       method: 'POST',
       headers: {
@@ -45,64 +59,76 @@ export const CustomerDetailsForm = () => {
     } else {
       console.error('Form submission failed');
     }
+    parentOnSubmit(data);
   };
+
 
   return (
     <Box
       as="form"
-      onSubmit={handleSubmit(onSubmit)}
-      w={{ base: '100%', md: '50%' }}
+      id="customer-details-form"
+      onSubmit={handleSubmit(handleFormSubmit)}
+      maxW="680px"
       mx="auto"
     >
-      <Stack gap={6}>
-        <Field
-          id="name"
-          label="Your Name"
-          errorText={errors.name && errors.name.message}
-        >
-          <Input placeholder="James Hoffman" {...register('name')} />
-        </Field>
-
-        <Field
-          id="email"
-          label="Email Address"
-          errorText={errors.email && errors.email.message}
-        >
-          <Input placeholder="james@gmail.com" {...register('email')} />
-        </Field>
-
+      <Stack direction="column" gap="40px">
+        <Flex gap="20px">
+          <Box flex="1">
+            <Field
+              id="name"
+              label="Your Name"
+              errorText={errors.name && errors.name.message}
+            >
+              <Input placeholder="Joshua" {...register('name')} p="15px 10px" />
+            </Field>
+          </Box>
+          <Box flex="1">
+            <Field
+              id="email"
+              label="Email Address"
+              errorText={errors.email && errors.email.message}
+            >
+              <Input
+                placeholder="james@gmail.com"
+                {...register('email')}
+                p="15px 10px"
+              />
+            </Field>
+          </Box>
+        </Flex>
+        <Separator />
         <Field
           id="address"
           label="Street Address"
           errorText={errors.address && errors.address.message}
         >
           <Input
-            placeholder="1 Sesame Street, Big Bird Building"
+            placeholder="67 Ayer Rajah Crescent"
             {...register('address')}
+            p="15px 10px"
           />
         </Field>
-
-        <Field id="unit" label="Unit / House Number (Optional)">
-          <Input placeholder="#12-34" {...register('unit')} />
-        </Field>
-
-        <Field
-          id="postal"
-          label="Postal Code"
-          errorText={errors.postal && errors.postal.message}
-        >
-          <Input placeholder="123456" {...register('postal')} />
-        </Field>
+        <Flex gap="20px">
+          <Box flex="1">
+            <Field id="unit" label="Unit / House Number (Optional)">
+              <Input placeholder="#03-05" {...register('unit')} p="15px 10px" />
+            </Field>
+          </Box>
+          <Box flex="1">
+            <Field
+              id="postal"
+              label="Postal Code"
+              errorText={errors.postal && errors.postal.message}
+            >
+              <Input
+                placeholder="139950"
+                {...register('postal')}
+                p="15px 10px"
+              />
+            </Field>
+          </Box>
+        </Flex>
       </Stack>
-      <Button
-        type="submit"
-        disabled={!isValid}
-        opacity={isValid ? 1 : 0.5}
-        mt={6}
-        w="100%"
-      >
-        Make Payment
-      </Button>
     </Box>
   );
 };
