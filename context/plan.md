@@ -1,0 +1,8 @@
+-ignore browser bar di figma data
+-buatkan Customer Details routes
+-baca figma meta data untuk membuat ui 
+-gunakan react hook form dan zod validation
+- gather the data and feed it into a Google Sheet, create one
+- Make Payment button should only become clickable / active and change appearance to full opacity, when fields are all filled (minus the unit / house number, that is optional)
+-gunakan bottomactionbar component 
+-buat responsive dan best practice untuk width height dll

@@ -11,7 +11,6 @@ import {
   HStack,
   IconButton,
   VStack,
-  Collapsible,
   Badge,
 } from '@chakra-ui/react';
 import Image from 'next/image';
@@ -23,6 +22,7 @@ import { useRouter } from 'next/navigation';
 import { debounce } from 'lodash';
 import { products } from '@/lib/data';
 import { Product } from '@/lib/types';
+import { useSearchStore } from '@/store/search'; // Import the new store
 
 const Header = () => {
   const router = useRouter();
@@ -31,7 +31,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const onToggle = () => setIsOpen(!isOpen);
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchTerm, setSearchTerm } = useSearchStore(); // Use the Zustand store
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -73,6 +73,13 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [searchContainerRef, mobileSearchContainerRef]);
+
+  const handleSearchSubmit = (query: string) => {
+    setSearchTerm(query);
+    router.push('/catalogue');
+    setShowDropdown(false);
+    setSearchResults([]);
+  };
 
 
   return (
@@ -132,6 +139,11 @@ const Header = () => {
                     setSearchTerm(e.target.value);
                     debouncedSearch(e.target.value);
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleSearchSubmit(searchTerm);
+                    }
+                  }}
                 />
               </InputGroup>
               {showDropdown && (
@@ -189,25 +201,40 @@ const Header = () => {
             <Link href={totalItems > 0 ? "/cart" : "#"} passHref>
               <Button
                 aria-label="Cart"
-                minW="120px"
+                minW="100%"
                 h="32px"
                 px="10px"
                 borderRadius="4px"
                 borderWidth="1px"
-                bg={totalItems > 0 ? '#375737' : '#F0F0F0'}
-                borderColor={totalItems > 0 ? '#375737' : '#F0F0F0'}
+                bg={'transparent'}
+                borderColor={'transparent'}
                 fontSize="14px"
                 fontWeight="500"
                 lineHeight="1.5"
-                color={totalItems > 0 ? '#FFFFFF' : '#5F5F5F'}
+                color={'#375737'}
                 _hover={{
-                  bg: totalItems > 0 ? '#375737' : '#F0F0F0',
-                  borderColor: totalItems > 0 ? '#375737' : '#F0F0F0',
                   cursor: totalItems > 0 ? 'pointer' : 'not-allowed',
                 }}
                 disabled={totalItems === 0}
               >
-                Your cart
+                <Flex align="center" gap={2} position="relative">
+                <Icon as={FiShoppingCart} boxSize="16px" />
+                  {totalItems > 0 && (
+                    <>
+                      <Badge
+                        position="absolute"
+                        top="-8px"
+                        right="-12px"
+                        borderRadius="full"
+                        colorScheme="green"
+                        fontSize="0.6em"
+                        px="0.3em"
+                      >
+                        {totalItems}
+                      </Badge>
+                    </>
+                  )}
+                </Flex>
               </Button>
             </Link>
           </HStack>
@@ -250,22 +277,25 @@ const Header = () => {
                 }}
                 disabled={totalItems === 0}
               >
-                <Box position="relative">
+                <Flex align="center" gap={2} position="relative">
                   Your cart
                   {totalItems > 0 && (
-                    <Badge
-                      position="absolute"
-                      top="-1px"
-                      right="-1px"
-                      borderRadius="full"
-                      colorScheme="green"
-                      fontSize="0.6em"
-                      px="0.3em"
-                    >
-                      {totalItems}
-                    </Badge>
+                    <>
+                      <Icon as={FiShoppingCart} boxSize="16px" />
+                      <Badge
+                        position="absolute"
+                        top="-8px"
+                        right="-12px"
+                        borderRadius="full"
+                        colorScheme="green"
+                        fontSize="0.6em"
+                        px="0.3em"
+                      >
+                        {totalItems}
+                      </Badge>
+                    </>
                   )}
-                </Box>
+                </Flex>
               </Button>
             </Link>
             <IconButton
@@ -280,8 +310,8 @@ const Header = () => {
         </Flex>
 
         {/* Mobile Menu */}
-        <Collapsible.Root open={isOpen}>
-          <Collapsible.Content>
+        {isOpen && (
+          <Box>
             <VStack
               gap={4}
               pt={4}
@@ -324,6 +354,11 @@ const Header = () => {
                     onChange={(e) => {
                       setSearchTerm(e.target.value);
                       debouncedSearch(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleSearchSubmit(searchTerm);
+                      }
                     }}
                   />
                 </InputGroup>
@@ -379,8 +414,8 @@ const Header = () => {
                   Filters
                 </Button>
               </VStack>
-          </Collapsible.Content>
-        </Collapsible.Root>
+          </Box>
+        )}
       </Container>
     </Box>
   );

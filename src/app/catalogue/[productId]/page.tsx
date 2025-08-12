@@ -9,7 +9,7 @@ import { products } from '@/lib/data';
 import ImageGallery from '@/components/ImageGallery';
 import ProductDetails from '@/components/ProductDetails';
 import Header from '@/components/Header';
-import BottomActionBar from '@/components/BottomActionBar';
+import BottomActionBar  from '@/components/BottomActionBar';
 
 interface ProductDetailPageProps {
   params: Promise<{ productId: string }>;
@@ -83,7 +83,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
         </Container>
 
         {/* Bottom Action Bar */}
-        <BottomActionBar onBack={() => router.back()}>
+        <BottomActionBar onBack={() => window.history.back()}>
           <Box fontSize={{ base: '20px', md: '24px' }} fontWeight="400" color="#375737">
             ${product.discountedPrice || product.price}
           </Box>
