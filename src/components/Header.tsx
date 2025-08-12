@@ -259,29 +259,26 @@ const Header = () => {
             <Link href={totalItems > 0 ? "/cart" : "#"} passHref>
               <Button
                 aria-label="Cart"
-                minW="120px"
+                minW="100%"
                 h="32px"
                 px="10px"
                 borderRadius="4px"
                 borderWidth="1px"
-                bg={totalItems > 0 ? '#375737' : '#F0F0F0'}
-                borderColor={totalItems > 0 ? '#375737' : '#F0F0F0'}
+                bg={'transparent'}
+                borderColor={'transparent'}
                 fontSize="14px"
                 fontWeight="500"
                 lineHeight="1.5"
-                color={totalItems > 0 ? '#FFFFFF' : '#5F5F5F'}
+                color={'#375737'}
                 _hover={{
-                  bg: totalItems > 0 ? '#375737' : '#F0F0F0',
-                  borderColor: totalItems > 0 ? '#375737' : '#F0F0F0',
                   cursor: totalItems > 0 ? 'pointer' : 'not-allowed',
                 }}
                 disabled={totalItems === 0}
               >
                 <Flex align="center" gap={2} position="relative">
-                  Your cart
+                <Icon as={FiShoppingCart} boxSize="16px" />
                   {totalItems > 0 && (
                     <>
-                      <Icon as={FiShoppingCart} boxSize="16px" />
                       <Badge
                         position="absolute"
                         top="-8px"

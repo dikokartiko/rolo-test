@@ -10,6 +10,7 @@ import ImageGallery from '@/components/ImageGallery';
 import ProductDetails from '@/components/ProductDetails';
 import Header from '@/components/Header';
 import BottomActionBar  from '@/components/BottomActionBar';
+import { IoIosArrowForward } from "react-icons/io";
 
 interface ProductDetailPageProps {
   params: Promise<{ productId: string }>;
@@ -107,7 +108,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               });
             }}
           >
-            Add to Cart →
+            Add to Cart <IoIosArrowForward/>
           </Button>
         </BottomActionBar>
       </Box>

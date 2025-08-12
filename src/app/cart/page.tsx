@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { Box, Flex, Text, Heading, Button, Image, Separator, VStack, HStack, Icon, Grid } from '@chakra-ui/react';
-import { LuArrowRight } from 'react-icons/lu';
+import { IoIosArrowForward } from "react-icons/io";
 import { useCartStore } from '@/store/cart';
 import { useRouter } from 'next/navigation';
 import BottomActionBar  from '@/components/BottomActionBar';
@@ -142,9 +142,8 @@ const CartPage = () => {
         <Box fontSize={{ base: '20px', md: '24px' }} fontWeight="400" color="#375737">
           Total: ${totalPrice.toFixed(2)}
         </Box>
-        <Link href="/details" passHref>
+        <Link href="/details">
           <Button
-            as="a"
             bg="#748067"
             color="white"
             fontSize="14px"
@@ -157,7 +156,7 @@ const CartPage = () => {
             disabled={cartItems.length === 0}
             opacity={cartItems.length > 0 ? 1 : 0.5}
           >
-            Make Payment
+            Make Payment<IoIosArrowForward/>
           </Button>
         </Link>
       </BottomActionBar>

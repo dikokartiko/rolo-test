@@ -25,7 +25,7 @@ type FormValues = z.infer<typeof schema>;
 
 interface CustomerDetailsFormProps {
   onValidChange: (isValid: boolean) => void;
-  onSubmit: (data: FormValues) => void;
+  onSubmit: (data: FormValues) => Promise<void>;
 }
 
 export const CustomerDetailsForm = ({
@@ -46,20 +46,10 @@ export const CustomerDetailsForm = ({
   }, [isValid, onValidChange]);
 
   const handleFormSubmit = async (data: FormValues) => {
-    const response = await fetch('/api/details', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      console.log('Form submitted successfully');
-    } else {
-      console.error('Form submission failed');
-    }
-    parentOnSubmit(data);
+    // The API call to /api/details is handled by the parent component (DetailsPage)
+    // The parent's onSubmit prop is responsible for setting the loading state and handling the API call.
+    // We just need to ensure the parent's onSubmit is awaited here.
+    await parentOnSubmit(data);
   };
 
 

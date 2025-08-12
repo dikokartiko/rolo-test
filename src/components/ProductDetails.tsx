@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, VStack, Text, HStack, Button, Flex, Separator } from '@chakra-ui/react';
 import { Product } from '@/lib/types';
 
@@ -76,7 +76,7 @@ export default function ProductDetails({ product, selectedColor, onColorSelect }
           <HStack gap={{ base: '12px', md: '20px' }}>
             {product.colors.map((color) => (
               <Box
-                key={color.name}
+                key={`${product.id}-${color.name}`}
                 w={{ base: '28px', md: '32px' }}
                 h={{ base: '28px', md: '32px' }}
                 borderWidth="1px"

@@ -8,8 +8,9 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cart';
 import { z } from 'zod';
- 
-const formSchema = z.object({
+import { IoIosArrowForward } from "react-icons/io";
+
+  const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email address'),
   address: z.string().min(1, 'Street address is required'),
@@ -22,6 +23,7 @@ type FormValues = z.infer<typeof formSchema>;
 export default function DetailsPage() {
   const router = useRouter();
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { items } = useCartStore();
   const total = items.reduce((sum, item) => sum + item.quantity * item.price, 0);
 
@@ -32,29 +34,41 @@ export default function DetailsPage() {
   }, [items, router]);
 
   const handleFormSubmit = async (data: FormValues) => {
-    const response = await fetch('/api/details', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
- 
-    if (response.ok) {
-      toaster.success({
-        title: 'Success',
-        description: 'Your details have been submitted successfully.',
-        duration: 3000,
-        closable: true,
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       });
-      router.push('/payment');
-    } else {
+
+      if (response.ok) {
+        toaster.success({
+          title: 'Success',
+          description: 'Your details have been submitted successfully.',
+          duration: 3000,
+          closable: true,
+        });
+        router.push('/checkout');
+      } else {
+        toaster.error({
+          title: 'Error',
+          description: 'There was an error submitting your details. Please try again.',
+          duration: 3000,
+          closable: true,
+        });
+      }
+    } catch (error) {
       toaster.error({
         title: 'Error',
-        description: 'There was an error submitting your details. Please try again.',
+        description: 'An unexpected error occurred. Please try again.',
         duration: 3000,
         closable: true,
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
  
@@ -76,7 +90,9 @@ export default function DetailsPage() {
         <Button
           type="submit"
           form="customer-details-form"
-          disabled={!isFormValid}
+          loading={isSubmitting}
+          loadingText="Processing..."
+          disabled={!isFormValid || isSubmitting}
           bg="#748067"
           color="white"
           fontSize="14px"
@@ -84,11 +100,11 @@ export default function DetailsPage() {
           h={{ base: '44px', md: '46px' }}
           px="20px"
           borderRadius="4px"
-          _hover={{ bg: '#5F6B56' }}
+          _hover={{ bg: isFormValid ? '#5F6B56' : '#748067' }}
           _active={{ bg: '#4A5444' }}
           opacity={isFormValid ? 1 : 0.5}
         >
-          Make Payment
+          Make Payment <IoIosArrowForward />
         </Button>
       </BottomActionBar>
     </Container>
