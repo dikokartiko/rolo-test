@@ -9,6 +9,7 @@ import { products } from '@/lib/data';
 import ImageGallery from '@/components/ImageGallery';
 import ProductDetails from '@/components/ProductDetails';
 import Header from '@/components/Header';
+import BottomActionBar from '@/components/BottomActionBar';
 
 interface ProductDetailPageProps {
   params: Promise<{ productId: string }>;
@@ -81,76 +82,34 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           </Grid>
         </Container>
 
-        {/* Bottom Action Bar (ignore any browser UI from design; this is app chrome only) */}
-        <Box
-          position="fixed"
-          bottom={0}
-          left={0}
-          right={0}
-          bg="white"
-          borderTop="1px solid #F0F0F0"
-          py={{ base: '8px', md: '10px' }}
-          // Respect device safe areas on iOS/Android chrome
-          pb="calc(env(safe-area-inset-bottom))"
-          zIndex={10}
-          // Ensure the fixed bar is always visible and does not cause page scroll
-          flexShrink={0}
-        >
-          <Container maxW="1280px" px={{ base: '16px', md: '24px', lg: '40px' }}>
-            <Stack
-              direction="row"
-              align="center"
-              justify="space-between"
-              gap={{ base: '12px', md: '40px' }}
-              // Allow items to wrap on very small screens
-              flexWrap="wrap"
-            >
-              <Button
-                bg="#F4F4F4"
-                color="#5F5F5F"
-                fontSize={{ base: '14px', md: '14px' }}
-                fontWeight="400"
-                h={{ base: '44px', md: '46px' }}
-                px="20px"
-                borderRadius="4px"
-                border="1px solid #F0F0F0"
-                _hover={{ bg: '#E8E8E8' }}
-                onClick={() => router.back()}
-              >
-                ← Back
-              </Button>
-
-              <HStack gap={{ base: '16px', md: '40px' }} ml="auto">
-                <Box fontSize={{ base: '20px', md: '24px' }} fontWeight="400" color="#375737">
-                  ${product.discountedPrice || product.price}
-                </Box>
-                <Button
-                  bg="#748067"
-                  color="white"
-                  fontSize="14px"
-                  fontWeight="400"
-                  h={{ base: '44px', md: '46px' }}
-                  px="20px"
-                  borderRadius="4px"
-                  _hover={{ bg: '#5F6B56' }}
-                  _active={{ bg: '#4A5444' }}
-                  onClick={() => {
-                    addItem(product, selectedColor);
-                    toaster.success({
-                      title: 'Added to cart',
-                      description: `${product.name} added to your cart.`,
-                      duration: 3000,
-                      closable: true,
-
-                    });
-                  }}
-                >
-                  Add to Cart →
-                </Button>
-              </HStack>
-            </Stack>
-          </Container>
-        </Box>
+        {/* Bottom Action Bar */}
+        <BottomActionBar onBack={() => router.back()}>
+          <Box fontSize={{ base: '20px', md: '24px' }} fontWeight="400" color="#375737">
+            ${product.discountedPrice || product.price}
+          </Box>
+          <Button
+            bg="#748067"
+            color="white"
+            fontSize="14px"
+            fontWeight="400"
+            h={{ base: '44px', md: '46px' }}
+            px="20px"
+            borderRadius="4px"
+            _hover={{ bg: '#5F6B56' }}
+            _active={{ bg: '#4A5444' }}
+            onClick={() => {
+              addItem(product, selectedColor);
+              toaster.success({
+                title: 'Added to cart',
+                description: `${product.name} added to your cart.`,
+                duration: 3000,
+                closable: true,
+              });
+            }}
+          >
+            Add to Cart →
+          </Button>
+        </BottomActionBar>
       </Box>
     </>
   );

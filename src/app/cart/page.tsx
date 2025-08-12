@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { Box, Flex, Text, Heading, Button, Image, Separator, VStack, HStack, Icon, Spacer, Grid } from '@chakra-ui/react';
-import { LuArrowLeft, LuArrowRight } from 'react-icons/lu';
+import { Box, Flex, Text, Heading, Button, Image, Separator, VStack, HStack, Icon, Grid } from '@chakra-ui/react';
+import { LuArrowRight } from 'react-icons/lu';
 import { useCartStore } from '@/store/cart';
 import { useRouter } from 'next/navigation';
+import BottomActionBar from '@/components/BottomActionBar';
 
 const CartPage = () => {
   const { items: cartItems } = useCartStore();
@@ -107,24 +108,24 @@ const CartPage = () => {
                       )}
                     </VStack>
                     <VStack align="flex-start" gap="2px">
-                    <Text
-                      fontSize="md"
-                      fontWeight="medium"
-                      lineHeight="1.5em"
-                      color="gray.900"
-                      justifySelf="end"
-                    >
-                      ${(item.discountedPrice || item.price) * item.quantity}
-                    </Text>
-                    <Text
-                      fontSize="sm"
-                      fontWeight="light"
-                      lineHeight="1.5em"
-                      color="gray.600"
-                      justifySelf="end"
-                    >
-                      {item.quantity} unit{item.quantity > 1 ? 's' : ''}
-                    </Text>
+                      <Text
+                        fontSize="md"
+                        fontWeight="medium"
+                        lineHeight="1.5em"
+                        color="gray.900"
+                        justifySelf="end"
+                      >
+                        ${(item.discountedPrice || item.price) * item.quantity}
+                      </Text>
+                      <Text
+                        fontSize="sm"
+                        fontWeight="light"
+                        lineHeight="1.5em"
+                        color="gray.600"
+                        justifySelf="end"
+                      >
+                        {item.quantity} unit{item.quantity > 1 ? 's' : ''}
+                      </Text>
                     </VStack>
                   </Grid>
                   {index < cartItems.length - 1 && (
@@ -136,73 +137,24 @@ const CartPage = () => {
           </VStack>
         </Flex>
       </Flex>
-      <Box
-        position="fixed"
-        bottom="0"
-        left="0"
-        right="0"
-        bg="white"
-        py="20px"
-        px={{ base: '20px', md: '40px' }}
-        boxShadow="0px -4px 10px rgba(0, 0, 0, 0.05)"
-        zIndex="1000"
-      >
-        <Flex
-          justifyContent="space-between"
-          alignItems="center"
-          width="100%"
-          maxWidth="1200px"
-          mx="auto"
+      <BottomActionBar onBack={() => window.history.back()}>
+        <Box fontSize={{ base: '20px', md: '24px' }} fontWeight="400" color="#375737">
+          Total ${totalPrice}
+        </Box>
+        <Button
+          bg="#748067"
+          color="white"
+          fontSize="14px"
+          fontWeight="400"
+          h={{ base: '44px', md: '46px' }}
+          px="20px"
+          borderRadius="4px"
+          _hover={{ bg: '#5F6B56' }}
+          _active={{ bg: '#4A5444' }}
         >
-          <Button
-            px="20px"
-            py="13px"
-            borderRadius="4px"
-            bg="gray.100"
-            border="1px solid"
-            borderColor="gray.200"
-            color="gray.600"
-            fontWeight="normal"
-            fontSize="sm"
-            lineHeight="1.5em"
-            textAlign="right"
-            display="flex"
-            alignItems="center"
-            gap="10px"
-            onClick={() => window.history.back()}
-          >
-            <Icon as={LuArrowLeft} w="16px" h="16px" />
-            <Text>Back</Text>
-          </Button>
-          <HStack gap="40px">
-            <Text
-              fontSize={{ base: 'xl', md: '2xl' }}
-              fontWeight="normal"
-              lineHeight="1.5em"
-              color="green.700"
-            >
-              Total ${totalPrice}
-            </Text>
-            <Button
-              px="20px"
-              py="13px"
-              borderRadius="4px"
-              bg="green.600"
-              color="white"
-              fontWeight="normal"
-              fontSize="sm"
-              lineHeight="1.5em"
-              textAlign="right"
-              display="flex"
-              alignItems="center"
-              gap="10px"
-            >
-              <Text>Check Out</Text>
-              <Icon as={LuArrowRight} w="16px" h="16px" />
-            </Button>
-          </HStack>
-        </Flex>
-      </Box>
+          Check Out →
+        </Button>
+      </BottomActionBar>
     </Box>
   );
 };
