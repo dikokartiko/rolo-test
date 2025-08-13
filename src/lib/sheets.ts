@@ -1,12 +1,7 @@
 import { google } from 'googleapis';
 
 export async function updateSheet(data: any[]) {
-  console.log('--- Google Sheets Integration Debug Info ---');
-  console.log('GOOGLE_CLIENT_EMAIL:', process.env.GOOGLE_CLIENT_EMAIL ? 'Set' : 'Not Set');
-  console.log('GOOGLE_SHEET_ID:', process.env.GOOGLE_SHEET_ID ? 'Set' : 'Not Set');
-  console.log('GOOGLE_PRIVATE_KEY (first 10 chars):', process.env.GOOGLE_PRIVATE_KEY ? process.env.GOOGLE_PRIVATE_KEY.substring(0, 10) + '...' : 'Not Set');
-
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n').trim();
   if (!privateKey) {
     console.error('GOOGLE_PRIVATE_KEY is missing or invalid.');
     throw new Error('Missing GOOGLE_PRIVATE_KEY');
