@@ -1,24 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rolo - E-commerce Application
+
+## Project Overview
+Rolo is a modern e-commerce web application built with **Next.js 15**, **React 19**, and **Chakra UI v3**. It provides a seamless shopping experience with a comprehensive product catalog, robust cart functionality, and integrated payment processing.
+
+## Tech Stack
+- **Framework**: Next.js 15 (with Turbopack)
+- **Frontend**: React 19 (with React Compiler)
+- **UI Library**: Chakra UI v3
+- **Language**: TypeScript
+- **Icons**: React Icons
+- **Theming**: Next Themes
+- **State Management**: Zustand
+- **Payment**: Stripe Integration
+- **Data Storage**: Google Sheets Integration
+- **Package Manager**: pnpm
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
 
 ```bash
-npm run dev
+pnpm install
 # or
-yarn dev
-# or
+npm install
+```
+
+Then, run the development server:
+
+```bash
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file in the root of the project and add the following environment variables:
+
+```
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+GOOGLE_SHEETS_API_KEY=your_google_sheets_api_key
+GOOGLE_SHEETS_SPREADSHEET_ID=your_google_sheets_spreadsheet_id
+```
 
 ## Learn More
 
