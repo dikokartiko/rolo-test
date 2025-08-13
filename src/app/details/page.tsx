@@ -1,9 +1,9 @@
 'use client';
  
 import { Box, Container, Heading, Button, Text } from '@chakra-ui/react';
-import BottomActionBar from '@/components/BottomActionBar';
+import BottomActionBar from '@/components/ui/BottomActionBar';
 import { toaster } from '@/components/ui/toaster';
-import { CustomerDetailsForm } from '@/components/CustomerDetailsForm';
+import { CustomerDetailsForm } from '@/app/details/CustomerDetailsForm';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useCartStore } from '@/store/cart';

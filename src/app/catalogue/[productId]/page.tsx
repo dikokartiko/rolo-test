@@ -4,12 +4,12 @@ import { Box, Container, Grid, Button, HStack, Stack, Text, VStack } from '@chak
 import { toaster } from '@/components/ui/toaster';
 import { use, useEffect, useState } from 'react';
 import { useCartStore } from '@/store/cart';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { products } from '@/lib/data';
-import ImageGallery from '@/components/ImageGallery';
-import ProductDetails from '@/components/ProductDetails';
+import ImageGallery from '@/app/catalogue/[productId]/ImageGallery';
+import ProductDetails from '@/app/catalogue/[productId]/ProductDetails';
 import Header from '@/components/Header';
-import BottomActionBar  from '@/components/BottomActionBar';
+import BottomActionBar  from '@/components/ui/BottomActionBar';
 import { IoIosArrowForward } from "react-icons/io";
 
 interface ProductDetailPageProps {
@@ -17,7 +17,6 @@ interface ProductDetailPageProps {
 }
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const router = useRouter();
   const { addItem } = useCartStore();
   const { productId } = use(params);
   const product = products.find((p) => p.id === productId);

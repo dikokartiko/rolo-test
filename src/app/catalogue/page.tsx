@@ -2,7 +2,7 @@
 
 import { SimpleGrid, Text, Container, VStack } from '@chakra-ui/react';
 import { products } from '@/lib/data';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/app/catalogue/ProductCard';
 import Header from '@/components/Header';
 import { useSearchStore } from '@/store/search';
 

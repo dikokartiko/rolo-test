@@ -5,7 +5,7 @@ import { Box, Flex, Text, Heading, Button, Image, Separator, VStack, HStack, Ico
 import { IoIosArrowForward } from "react-icons/io";
 import { useCartStore } from '@/store/cart';
 import { useRouter } from 'next/navigation';
-import BottomActionBar  from '@/components/BottomActionBar';
+import BottomActionBar  from '@/components/ui/BottomActionBar';
 import Link from 'next/link';
 
 const CartPage = () => {

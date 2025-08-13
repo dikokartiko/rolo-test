@@ -1,8 +1,6 @@
 'use client';
 
 import {
-  Box,
-  Container,
   Heading,
   HStack,
   VStack,
@@ -11,14 +9,12 @@ import {
   Input,
   Grid,
   GridItem,
-  Icon,
 } from '@chakra-ui/react';
 import { Separator } from '../../components/ui/separator';
 import { useCartStore } from '@/store/cart';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FaCoffee } from 'react-icons/fa';
-import PaymentForm from '@/components/PaymentForm';
+import PaymentForm from '@/app/checkout/PaymentForm';
 import Image from 'next/image';
 
 export default function CheckoutPage() {
@@ -78,10 +74,10 @@ export default function CheckoutPage() {
         flexDirection="column"
       >
         <HStack gap={4} align="center" mb={10}>
-          <Image src="/images/logos/ROLO.png" alt="Rolo Logo" width={32} height={32} />
-          <Heading as="h1" size="lg" fontWeight="bold">
+          <Image src="/images/logos/ROLO.png" alt="Rolo Logo" width={128} height={128} />
+          {/* <Heading as="h1" size="lg" fontWeight="bold">
             Rolo
-          </Heading>
+          </Heading> */}
         </HStack>
         <VStack w="full" gap={4} align="stretch" flex="1">
           <Text fontSize="4xl" fontWeight="bold">
