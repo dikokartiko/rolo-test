@@ -3,7 +3,7 @@
 import { SimpleGrid, Text, Container, VStack } from '@chakra-ui/react';
 import { products } from '@/lib/data';
 import ProductCard from '@/app/catalogue/ProductCard';
-import Header from '@/components/Header';
+import Header from '@/components/ui/Header';
 import { useSearchStore } from '@/store/search';
 
 export default function CataloguePage() {

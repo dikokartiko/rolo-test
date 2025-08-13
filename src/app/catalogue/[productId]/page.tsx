@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation';
 import { products } from '@/lib/data';
 import ImageGallery from '@/app/catalogue/[productId]/ImageGallery';
 import ProductDetails from '@/app/catalogue/[productId]/ProductDetails';
-import Header from '@/components/Header';
+import Header from '@/components/ui/Header';
 import BottomActionBar  from '@/components/ui/BottomActionBar';
 import { IoIosArrowForward } from "react-icons/io";
 
