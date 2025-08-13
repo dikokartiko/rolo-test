@@ -34,7 +34,7 @@ export async function updateSheet(data: any[]) {
       range: 'A1',
       valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: [Object.values(data)],
+        values: [data],
       },
     });
     console.log('--- Google Sheets Update Success ---');
